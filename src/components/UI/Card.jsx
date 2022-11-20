@@ -7,7 +7,7 @@ const Card = ({ coin }) => {
       <div className='flex gap-x-4 items-center w-1/3 justify-start'>
         <img src={coin.currency1.image} width='32' height='32' alt={`${coin.currency1.title} Logo`} loading='lazy' />
         <span>{coin.currency1.title_fa}</span>
-        <span className='text-[#9596F5] text-sm'>{coin.code}</span>
+        <span className='text-[#9596F5] text-sm hidden md:block'>{coin.code}</span>
       </div>
 
       {/* Price */}
@@ -18,7 +18,7 @@ const Card = ({ coin }) => {
       {/* Changes */}
       <div className='w-1/3 flex justify-end'>
         <div
-          className={`p-2 rounded-md w-20 flex justify-center items-center ${
+          className={`p-2 rounded-md w-[70px] flex justify-center items-center ${
             +coin.price_info.change > 0 ? 'bg-green-500' : 'bg-red-500'
           }`}
         >

@@ -5,17 +5,14 @@ import { useGetCoinsQuery } from './services/bitpin';
 import socketIOClient from 'socket.io-client';
 
 // Components
-import Loading from './components/UI/Loading';
+import Message from './components/UI/Message';
 import Card from './components/UI/Card';
-
-const PER_PAGE = 20;
 
 const App = () => {
   const { data, error, isLoading } = useGetCoinsQuery();
 
   useEffect(() => {
-    const socket = socketIOClient('wss://ws.bitpin.ir');
-    console.log(socket);
+    const socket = socketIOClient('wss://ws.bitpin.org');
     socket.on('sub_to_price_info', (data) => {
       console.log(data);
 
@@ -26,11 +23,16 @@ const App = () => {
   return (
     <>
       {isLoading ? (
-        <Loading />
+        <Message text='لطفا صبر کنید ...' />
       ) : error ? (
-        <p>{error}</p>
+        <Message text={error.error} />
       ) : (
         <main className='p-4 flex flex-col gap-y-4'>
+          <div className='flex gap-x-4 justify-between items-center bg-[#11154d] rounded p-4'>
+            <span className='w-1/3 flex justify-start'>ارز دیجیتال</span>
+            <span className='w-1/3 flex justify-center'>قیمت</span>
+            <span className='w-1/3 flex justify-end'>تغییرات</span>
+          </div>
           {data.results.map((coin) => (
             <Card key={coin.id} coin={coin} />
           ))}
