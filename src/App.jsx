@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useGetCoinsQuery } from './services/bitpin';
 
-import socketIOClient from 'socket.io-client';
+import webSocket from 'socket.io-client';
 
 // Components
 import Message from './components/UI/Message';
@@ -12,7 +12,10 @@ const App = () => {
   const { data, error, isLoading } = useGetCoinsQuery();
 
   useEffect(() => {
-    const socket = socketIOClient('wss://ws.bitpin.org');
+    const socket = webSocket('wss://ws.bitpin.org', {
+      transports: ['websocket'],
+    });
+    console.log(socket);
     socket.on('sub_to_price_info', (data) => {
       console.log(data);
 
